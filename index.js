@@ -1,9 +1,13 @@
 const mysql = require('mysql');
 const express = require('express');
 var app = express();
+var SERVER_NAME = 'user-api'
+var restify = require('restify')
+var PORT = process.env.PORT;
 const bodyparser = require('body-parser');
 
 app.use(bodyparser.json());
+app = restify.createServer({name: SERVER_NAME})
 
 var mysqlConnection = mysql.createConnection({
     host: 'us-cdbr-iron-east-01.cleardb.net',
@@ -12,8 +16,6 @@ var mysqlConnection = mysql.createConnection({
     database: 'heroku_9a357d11f3df65c',
     multipleStatements: true
 });
-console.log(' /patients');
-console.log(' /patients/:id');  
 
 mysqlConnection.connect((err) => {
     if (!err)
@@ -22,8 +24,17 @@ mysqlConnection.connect((err) => {
         console.log('DB connection failed \n Error : ' + JSON.stringify(err, undefined, 2));
 });
 
-app.listen(3000, () => console.log('Express server is runnig at port no : 3000'));
+app.listen(PORT, function(){
+    console.log('Server %s listening at %s', app.name, app.url)
+    console.log('Resources:')
+    console.log(' /users')
+    console.log(' /users/:id')   
+})
+  // Allow the use of POST
+  .use(restify.fullResponse())
 
+  // Maps req.body to req.params so there is no switching between them
+  .use(restify.bodyParser())
 
 //Get all patients
 app.get('/patients', (req, res) => {
