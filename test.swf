@@ -1,0 +1,161 @@
+{
+      //var a: Int!
+       if(isOperatorPressed){
+               num1 = Double(resultArea.text!)!
+               resultArea.text = “0”
+               isOperatorPressed = false
+       }
+
+       if(isEqlPressed){
+           setToInit()
+       }
+
+       if(resultArea.text == “0"){
+           if(sender.tag == -1)
+           {
+               resultArea.text?.append(“.”)
+               hasDot = true
+           }
+           else {
+               resultArea.text = String(sender.tag)
+           }
+
+       } else {
+           if(sender.tag == -1 && !hasDot && (resultArea.text?.count)! < MAX_RESULT_LENTGH - 1)
+           {
+               resultArea.text?.append(“.”)
+               hasDot = true
+           }
+           if( sender.tag != -1 && (resultArea.text?.count)! < MAX_RESULT_LENTGH){
+               resultArea.text?.append(String(sender.tag))
+           }
+
+       }
+
+   }
+Here is another
+func doubleRound(result: Double) -> String {
+       let finalAns = String(format: “%g”, result)
+       return finalAns
+   }
+
+
+
+   ------------------------------------
+
+
+   //
+//  ViewController.swift
+//  Calculadora
+//
+//  Created by Diego  lopez on 9/25/18.
+//  Copyright © 2018 Diego_Lopez. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    var numberOnScreen : Double = 0;
+    var previousnumber: Double = 0;
+    var performingMath = false
+    var operation = 0;
+    var equalflag = false
+    
+
+    @IBOutlet weak var labelresult: UILabel!
+    @IBAction func numbers(_ sender: UIButton)
+    {
+        if performingMath == true{
+
+            labelresult.text = String(sender.tag-1)
+            numberOnScreen = Double(labelresult.text!)!
+            performingMath = false
+        }
+        else{
+            if equalflag != false{
+                labelresult.text = "";
+                
+            }
+            if sender.tag == 18 {
+                labelresult.text = "0";
+                
+            }
+            
+            labelresult.text = labelresult.text! + String(sender.tag-1)
+            numberOnScreen=Double(labelresult.text!)!
+            
+        }
+
+    }
+    
+    @IBAction func btn_operators(_ sender: UIButton)
+    {
+
+     if labelresult.text != "" && sender.tag != 11 && sender.tag != 17
+        {
+            previousnumber = Double(labelresult.text!)!
+            if sender.tag == 12 //percentage
+            {
+                labelresult.text = "%";
+            }
+            else if sender.tag == 13 //divide
+            {
+                labelresult.text = "/";
+            }
+            else if sender.tag == 14//multiply
+            {
+                labelresult.text = "X";
+            }
+            else if sender.tag == 15//minus
+            {
+                labelresult.text = "-";
+            }
+            else if sender.tag == 16 //plus
+            {
+                labelresult.text = "+";
+                //labelresult.text = String(previousnumber + numberOnScreen)
+            }
+            operation = sender.tag
+            performingMath = true;
+        }
+        else if sender.tag == 17
+        {
+            if operation == 12
+            {
+                labelresult.text = String((previousnumber * 100)/(numberOnScreen))
+            }
+            else if operation == 13
+            {
+                labelresult.text = String(previousnumber / numberOnScreen)
+            }
+            else if operation == 14
+            {
+                labelresult.text = String(previousnumber * numberOnScreen)
+            }
+            else if operation == 15
+            {
+                labelresult.text = String(previousnumber - numberOnScreen)
+            }
+            else if operation == 16
+            {
+             labelresult.text = String(previousnumber + numberOnScreen)
+            }
+            equalflag = true
+        }
+     else if sender.tag == 11
+    {
+        labelresult.text = ""
+        previousnumber = 0;
+        numberOnScreen = 0;
+        operation = 0;
+    }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+
+}
+
