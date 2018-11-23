@@ -1,0 +1,16 @@
+{
+    "name": "lab04heroku",
+    "version": "1.0.0",
+    "description": "Users API",
+    "dependencies": {
+        "restify": "4.1.1",
+		"save": "2.3.0"
+
+    },
+    "author": "Peter Doe",
+	"private": true,
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	}
+}
