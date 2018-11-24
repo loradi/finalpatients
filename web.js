@@ -132,19 +132,6 @@ app.delete('/patients/:id/records', function(request, response) {
 
 //Insert patients with validations
 app.post('/patients', function(request, response, next) {
-    //let pat = request.body;
-    console.log("ESTE ES EL VALOR DE NAME: ", request.body.name);
-      // Make sure name is defined
-  if (request.body.name === "undefined" ) {
-    // If there are any errors, pass them to next in the correct format
-    console.log('Entro al if ');
-    response.send(['THE NAME MUST BE SUPLIED IS MANDATORI']);
-  }
-  if (request.body.age === "undefined") {
-    // If there are any errors, pass them to next in the correct format
-    response.send(['THE AGE MUST BE SUPLIED IS MANDATORI']);
-  }
-    console.log("this is the request to create a patient ", request.body.lastName);
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
