@@ -90,16 +90,7 @@ app.delete('/patients', function(request, response) {
         response.send(['code: {201} description: {All patients was deleted sucessfully}']);
     });
 });
-//delete all records
-app.delete('/patients/records', function(request, response) {
-    connection.query('DELETE recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients', function(err, rows, fields) {
-        if (err) {
-            console.log('error: ', err);
-            throw err;
-        }
-        response.send(['code: {201} description: {All records patients was deleted sucessfully}']);
-    });
-});
+
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
