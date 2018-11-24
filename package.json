@@ -1,17 +1,12 @@
 {
-    "name": "patients",
-    "version": "1.0.0",
-    "description": "REST API - Users",
-    "dependencies": {
-        "body-parser": "^1.18.2",
-        "express": "^4.16.3",
-        "log": "^1.4.0",
-        "mysql": "^2.15.0",
-        "restify": "4.1.1",
-        "save": "2.3.0",
-        "seneca": "^3.7.0"
-    },
-    "author": "dlopez",
-    "private": true,
-    "main": "index.js"
+  "name": "node-example",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.1.x"
+    , "mysql": ""
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
 }
