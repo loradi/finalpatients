@@ -139,7 +139,7 @@ app.post('/patients', function(request, response, next) {
     // If there are any errors, pass them to next in the correct format
     return next(new express.InvalidArgumentError('name must be supplied'))
   }
-  if (request.body.age === undefined ) {
+  if (request.body.age === "undefined") {
     // If there are any errors, pass them to next in the correct format
     return next(new express.InvalidArgumentError('age must be supplied'))
   }
