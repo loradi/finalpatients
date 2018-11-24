@@ -133,6 +133,7 @@ app.delete('/patients/:id/records', function(request, response) {
 //Insert patients with validations
 app.post('/patients', function(request, response, next) {
     //let pat = request.body;
+    console.log("ESTE ES EL VALOR DE NAME: ", request.body.name);
       // Make sure name is defined
   if (request.body.name === undefined ) {
     // If there are any errors, pass them to next in the correct format
