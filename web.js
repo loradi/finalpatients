@@ -44,7 +44,7 @@ app.get('/patients', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send([201,'Patients', rows]);
+        response.send(['code: {201} Patients', rows]);
     });
 });
 
@@ -55,7 +55,7 @@ app.get('/patients/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['Patients', rows]);
+        response.send(['code: {201} Patients', rows]);
     });
 });
 
@@ -66,7 +66,7 @@ app.get('/patients/:id/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['Patients', rows]);
+        response.send(['code: {201} Patients', rows]);
     });
 });
 //get  patients by ID 
@@ -76,7 +76,7 @@ app.get('/patients/:id', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['Patients', rows]);
+        response.send(['code: {201} Patients', rows]);
     });
 });
 
@@ -87,7 +87,17 @@ app.delete('/patients', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['code: {200} description: {All patients was deleted sucessfully}']);
+        response.send(['code: {201} description: {All patients was deleted sucessfully}']);
+    });
+});
+//delete all records
+app.delete('/patients/records', function(request, response) {
+    connection.query('DELETE recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {All records patients was deleted sucessfully}']);
     });
 });
 
