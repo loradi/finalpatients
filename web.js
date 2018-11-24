@@ -36,25 +36,15 @@ function handleDisconnect() {
 }
 
 handleDisconnect();
-//get all patients
-app.get('/patients', function(request, response) {
+
+app.get('/', function(request, response) {
     connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
         }
-        response.send([rows]);
+        response.send(['Hello World!!!! HOLA MUNDO!!!!', rows]);
     });
-});
-
-//Get all records
-app.get('/patients/records', (request, response) => {
-    connection.query('SELECT idpatients, recordPatient FROM patients', (err, rows, fields) => {
-        if (!err)
-            response.send(rows);
-        else
-            throw err;
-    })
 });
 
 var port = process.env.PORT || 5000;
