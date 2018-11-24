@@ -102,6 +102,17 @@ app.delete('/patients/records', function(request, response) {
     });
 });
 
+//delete all patients
+app.delete('/patients:id', function(request, response) {
+    connection.query('DELETE FROM patients WHERE idpatients = ?',[request.param.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was deleted sucessfully}']);
+    });
+});
+
 
 
 var port = process.env.PORT || 5000;
