@@ -37,6 +37,7 @@ function handleDisconnect() {
 
 handleDisconnect();
 
+//get all patients
 app.get('/patients', function(request, response) {
     connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients', function(err, rows, fields) {
         if (err) {
@@ -44,6 +45,17 @@ app.get('/patients', function(request, response) {
             throw err;
         }
         response.send(['Patients', rows]);
+    });
+});
+
+//get all records
+app.get('/patients/records', function(request, response) {
+    connection.query('SELECT idpatients, recordPatient FROM patients', function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['PatientsRecords', rows]);
     });
 });
 
