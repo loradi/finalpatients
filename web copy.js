@@ -91,17 +91,6 @@ app.delete('/patients', function(request, response) {
     });
 });
 
-//delete all records
-app.delete('/patients/records', function(request, response) {
-    connection.query('UPDATE patients set recordPatient = null, bloodPreasure = null, respirationRate = null, bloodOxigen = null, heartRate = null', function(err, rows, fields) {
-        if (err) {
-            console.log('error: ', err);
-            throw err;
-        }
-        response.send(['code: {201} description: {All records patients was deleted sucessfully}']);
-    });
-});
-
 
 
 var port = process.env.PORT || 5000;
