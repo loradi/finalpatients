@@ -102,14 +102,28 @@ app.delete('/patients/records', function(request, response) {
     });
 });
 
-//delete all patients
+//delete patients by id 
 app.delete('/patients:id', function(request, response) {
-    connection.query('DELETE FROM patients WHERE idpatients = ?','\'',[request.param.id],'\'', function(err, rows, fields) {
+    connection.query('DELETE FROM patients WHERE idpatients = ?',[request.param.id], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
         }
         response.send(['code: {201} description: {The patient was deleted sucessfully}']);
+    });
+});
+
+//Insert patients
+app.post('/patients', function(request, response) {
+    let pat = request.body;
+    var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('',"+pat.firstName+"','"+pat.lastName+"',"+pat.phoneNumber+",'"+pat.address+"','"+pat.dateBirthDay+"','"+pat.department+"','"+pat.doctorName+"')";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was inserted sucessfully}']);
     });
 });
 
