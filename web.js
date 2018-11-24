@@ -11,8 +11,6 @@ var db_config = {
     multipleStatements: true
 };
 app
-  // Allow the use of POST
-  .use(express.fullResponse())
 
   // Maps req.body to req.params so there is no switching between them
   .use(express.bodyParser())
