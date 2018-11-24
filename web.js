@@ -137,6 +137,7 @@ app.post('/patients', function(request, response, next) {
       // Make sure name is defined
   if (request.body.name === "undefined" ) {
     // If there are any errors, pass them to next in the correct format
+    console.log('Entro al if ');
     response.send(['THE NAME MUST BE SUPLIED IS MANDATORI']);
   }
   if (request.body.age === "undefined") {
