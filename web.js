@@ -44,7 +44,7 @@ app.get('/patients', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['Patients', rows]);
+        response.send([201,'Patients', rows]);
     });
 });
 
@@ -87,7 +87,7 @@ app.delete('/patients', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['All patients was deleted sucessfully']);
+        response.send(['code: {200} description: {All patients was deleted sucessfully}']);
     });
 });
 
