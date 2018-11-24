@@ -134,11 +134,11 @@ app.delete('/patients/:id/records', function(request, response) {
 app.post('/patients', function(request, response, next) {
     //let pat = request.body;
       // Make sure name is defined
-  if (req.body.name === undefined ) {
+  if (request.body.name === undefined ) {
     // If there are any errors, pass them to next in the correct format
     return next(new express.InvalidArgumentError('name must be supplied'))
   }
-  if (req.body.age === undefined ) {
+  if (request.body.age === undefined ) {
     // If there are any errors, pass them to next in the correct format
     return next(new express.InvalidArgumentError('age must be supplied'))
   }
