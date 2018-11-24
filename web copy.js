@@ -10,6 +10,10 @@ var db_config = {
     database: 'heroku_9a357d11f3df65c',
     multipleStatements: true
 };
+app
+
+  // Maps req.body to req.params so there is no switching between them
+  .use(express.bodyParser())
 
 var connection;
 
@@ -99,6 +103,59 @@ app.delete('/patients/records', function(request, response) {
             throw err;
         }
         response.send(['code: {201} description: {All records patients was deleted sucessfully}']);
+    });
+});
+
+//delete patients by id 
+app.delete('/patients/:id', function(request, response) {
+    console.log("ACA ENTRO AL DELETE POR ID ", request.params.id);
+    connection.query('DELETE FROM patients WHERE idpatients = ?',[request.params.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was deleted sucessfully}']);
+    });
+});
+
+//delete Record by id 
+app.delete('/patients/:id/records', function(request, response) {
+    console.log("ACA ENTRO AL DELETE POR ID DEL RECORD ", request.params.id);
+    connection.query("UPDATE patients set recordPatient = null, bloodPreasure = null, respirationRate = null, bloodOxigen = null, heartRate = null WHERE idpatients ='"+request.params.id+"'", function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was deleted sucessfully}']);
+    });
+});
+
+//Insert patients
+app.post('/patients', function(request, response) {
+    //let pat = request.body;
+    console.log("this is the request to create a patient ", request.body.lastName);
+    var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was created sucessfully}']);
+    });
+});
+
+//Insert record by patient
+app.post('/patients/:id/records', function(request, response) {
+    console.log("this is the request to create a record for ID patient", request.body.heartRate);
+    var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The record patient was created sucessfully}']);
     });
 });
 

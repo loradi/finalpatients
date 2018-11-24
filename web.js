@@ -118,6 +118,18 @@ app.delete('/patients/:id', function(request, response) {
     });
 });
 
+//delete Record by id 
+app.delete('/patients/:id/records', function(request, response) {
+    console.log("ACA ENTRO AL DELETE POR ID DEL RECORD ", request.params.id);
+    connection.query("UPDATE patients set recordPatient = null, bloodPreasure = null, respirationRate = null, bloodOxigen = null, heartRate = null WHERE idpatients ='"+request.params.id+"'", function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was deleted sucessfully}']);
+    });
+});
+
 //Insert patients
 app.post('/patients', function(request, response) {
     //let pat = request.body;
