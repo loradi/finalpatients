@@ -80,6 +80,17 @@ app.get('/patients/:id', function(request, response) {
     });
 });
 
+//delete all patients
+app.delete('/patients', function(request, response) {
+    connection.query('DELETE FROM patients', function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['All patients was deleted sucessfully']);
+    });
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
     console.log("Listening on " + port);
