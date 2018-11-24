@@ -55,7 +55,7 @@ app.get('/patients/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['PatientsRecords', rows]);
+        response.send(['Patients', rows]);
     });
 });
 
@@ -66,7 +66,17 @@ app.get('/patients/:id/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['PatientsIdRecords', rows]);
+        response.send(['Patients', rows]);
+    });
+});
+//get  patients by ID 
+app.get('/patients/:id', function(request, response) {
+    connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['Patients', rows]);
     });
 });
 
