@@ -37,7 +37,7 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-app.get('/', function(request, response) {
+app.get('/patients', function(request, response) {
     connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
