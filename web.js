@@ -107,8 +107,9 @@ app.delete('/patients/records', function(request, response) {
 });
 
 //delete patients by id 
-app.delete('/patients:id', function(request, response) {
-    connection.query('DELETE FROM patients WHERE idpatients = ?',[request.param.id], function(err, rows, fields) {
+app.delete('/patients/:id', function(request, response) {
+    console.log("ACA ENTRO AL DELETE POR ID ", request.params.id);
+    connection.query('DELETE FROM patients WHERE idpatients = ?',[request.params.id], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
@@ -120,7 +121,7 @@ app.delete('/patients:id', function(request, response) {
 //Insert patients
 app.post('/patients', function(request, response) {
     //let pat = request.body;
-    console.log("ACA VAN LAS VARIABLES ", request.body.lastName);
+    console.log("this is the request to create a patient ", request.body.lastName);
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -128,7 +129,21 @@ app.post('/patients', function(request, response) {
             console.log('error code: {404} ', err);
             throw err;
         }
-        response.send(['code: {201} description: {The patient was inserted sucessfully}']);
+        response.send(['code: {201} description: {The patient was created sucessfully}']);
+    });
+});
+
+//Insert record by patient
+app.post('/patients/:id/records', function(request, response) {
+    console.log("this is the request to create a record for ID patient", request.body.heartRate);
+    var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The record patient was created sucessfully}']);
     });
 });
 
