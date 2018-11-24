@@ -137,11 +137,11 @@ app.post('/patients', function(request, response, next) {
       // Make sure name is defined
   if (request.body.name === "undefined" ) {
     // If there are any errors, pass them to next in the correct format
-    throw next(new express.InvalidArgumentError('name must be supplied'))
+    response.send(['THE NAME MUST BE SUPLIED IS MANDATORI']);
   }
   if (request.body.age === "undefined") {
     // If there are any errors, pass them to next in the correct format
-    throw next(new express.InvalidArgumentError('age must be supplied'))
+    response.send(['THE AGE MUST BE SUPLIED IS MANDATORI']);
   }
     console.log("this is the request to create a patient ", request.body.lastName);
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
