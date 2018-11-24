@@ -159,6 +159,31 @@ app.post('/patients/:id/records', function(request, response) {
     });
 });
 
+//Update record by ID patient
+app.put('/patients/:id/records', function(request, response) {
+    var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The record patient was UPDATED sucessfully}']);
+    });
+});
+
+//Update patient
+app.put('/patients/:id', function(request, response) {
+    var sql ="UPDATE patients set firstName = '"+request.body.firstName+"', lastName = '"+request.body.lastName+"', phoneNumber = '"+request.body.phoneNumber+"', address = '"+request.body.address+"', dateBirthDay = '"+request.body.dateBirthDay+"', department = '"+request.body.department+"', doctorName = '"+request.body.doctorName+"'  WHERE idpatients = '"+request.params.id+"'";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send(['code: {201} description: {The patient was UPDATED sucessfully}']);
+    });
+});
 
 
 var port = process.env.PORT || 5000;
