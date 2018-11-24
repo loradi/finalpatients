@@ -50,7 +50,7 @@ app.get('/patients', function(request, response) {
 
 //get all records
 app.get('/patients/records', function(request, response) {
-    connection.query('SELECT idpatients, recordPatient FROM patients', function(err, rows, fields) {
+    connection.query('SELECT idpatients, recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
@@ -61,7 +61,7 @@ app.get('/patients/records', function(request, response) {
 
 //get an records by ID patients
 app.get('/patients/:id/records', function(request, response) {
-    connection.query('SELECT idpatients, recordPatient FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
+    connection.query('SELECT idpatients, recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
