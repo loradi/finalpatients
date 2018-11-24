@@ -59,6 +59,17 @@ app.get('/patients/records', function(request, response) {
     });
 });
 
+//get an records by ID patients
+app.get('/patients/:id/records', function(request, response) {
+    connection.query('SELECT idpatients, recordPatient FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['PatientsIdRecords', rows]);
+    });
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
     console.log("Listening on " + port);
