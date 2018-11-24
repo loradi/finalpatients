@@ -92,7 +92,7 @@ app.delete('/patients', function(request, response) {
 });
 //delete all records
 app.delete('/patients/records', function(request, response) {
-    connection.query('DELETE recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
+    connection.query('DELETE recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
