@@ -10,6 +10,12 @@ var db_config = {
     database: 'heroku_9a357d11f3df65c',
     multipleStatements: true
 };
+app
+  // Allow the use of POST
+  .use(express.fullResponse())
+
+  // Maps req.body to req.params so there is no switching between them
+  .use(express.bodyParser())
 
 var connection;
 
@@ -116,7 +122,7 @@ app.delete('/patients:id', function(request, response) {
 //Insert patients
 app.post('/patients', function(request, response) {
     //let pat = request.body;
-    console.log("ACA VAN LAS VARIABLES ", request.body.lastName);
+    console.log("ACA VAN LAS VARIABLES ", request.params.lastName);
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('',"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
