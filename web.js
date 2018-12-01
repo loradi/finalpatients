@@ -243,7 +243,7 @@ app.listen(port, function() {
     console.log("METHODS REQUEST; POST:"+postCounter+" PUT: "+putCounter+" DELETE: "+deleteCounter+" GET: "+getCounter); 
 });
 
-function isPatientRequestValid(req) {
+function isPatientRequestValid(request) {
     req.assert("firstName", "Field 'first name' is required!").notEmpty();
     req.assert("lastName", "Field 'last_name' is required!").notEmpty();
     req.assert("phoneNumber", "Field 'phone number' is required!").notEmpty();
@@ -251,15 +251,15 @@ function isPatientRequestValid(req) {
     req.assert("dateBirthDay", "Field 'date of Bithday' is required!").notEmpty();
     req.assert("department", "Field 'department' is required!").notEmpty();
     req.assert("doctorName", "Field 'doctorname' is required!").notEmpty();
-    return req.validationErrors();
+    return request.validationErrors();
 }
 
-function isRecordsRequestValid(req) {
+function isRecordsRequestValid(request) {
     req.assert("recordPatient", "Field 'record patient title' is required!").notEmpty();
     req.assert("bloodPreasure", "Field 'blood preasure' is required!").notEmpty();
     req.assert("respirationRate", "Field 'respiration rate' is required!").notEmpty();
     req.assert("bloodOxigen", "Field 'blood oxigen' is required!").notEmpty();
     req.assert("heartRate", "Field 'heart rate' is required!").notEmpty();
 
-    return req.validationErrors();
+    return request.validationErrors();
 }
