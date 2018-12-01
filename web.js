@@ -155,7 +155,7 @@ app.delete('/patients/:id/records', function(request, response) {
 app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
-    let reqValidErrors = isPatientRequestValid(request);
+    var reqValidErrors = isPatientRequestValid(request);
     if (reqValidErrors) {
         response.status(400).send(reqValidErrors);
         return;
