@@ -130,10 +130,8 @@ app.delete('/patients/:id/records', function(request, response) {
     });
 });
 
-//Insert patients
-app.post('/patients', function(request, response) {
-    //let pat = request.body;
-    console.log("this is the request to create a patient ", request.body.lastName);
+//Insert patients with validations
+app.post('/patients', function(request, response, next) {
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -145,7 +143,7 @@ app.post('/patients', function(request, response) {
     });
 });
 
-//Insert record by ID patient
+//Insert record by patient
 app.post('/patients/:id/records', function(request, response) {
     console.log("this is the request to create a record for ID patient", request.body.heartRate);
     var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
@@ -182,6 +180,18 @@ app.put('/patients/:id', function(request, response) {
             throw err;
         }
         response.send(['code: {201} description: {The patient was UPDATED sucessfully}']);
+    });
+});
+
+//Users manage Users 
+//get  user and password 
+app.get('/users/password/:username', function(request, response) {
+    connection.query('SELECT username, password FROM users WHERE username = ?', [request.params.username], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} users', rows]);
     });
 });
 

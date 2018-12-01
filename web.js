@@ -2,6 +2,10 @@ var express = require("express");
 var mysql = require('mysql');
 var app = express();
 app.use(express.logger());
+var getCounter = 0;
+var postCounter = 0;
+var deleteCounter = 0;
+var putCounter = 0;
 
 var db_config = {
     host: 'us-cdbr-iron-east-01.cleardb.net',
@@ -16,6 +20,7 @@ app
   .use(express.bodyParser())
 
 var connection;
+
 
 function handleDisconnect() {
     console.log('1. connecting to db:');
@@ -43,6 +48,8 @@ handleDisconnect();
 
 //get all patients
 app.get('/patients', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
     connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -54,6 +61,8 @@ app.get('/patients', function(request, response) {
 
 //get all records
 app.get('/patients/records', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
     connection.query('SELECT idpatients, recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -65,6 +74,8 @@ app.get('/patients/records', function(request, response) {
 
 //get an records by ID patients
 app.get('/patients/:id/records', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
     connection.query('SELECT idpatients, recordPatient, bloodPreasure, respirationRate, bloodOxigen, heartRate FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -75,6 +86,8 @@ app.get('/patients/:id/records', function(request, response) {
 });
 //get  patients by ID 
 app.get('/patients/:id', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
     connection.query('SELECT idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName FROM patients WHERE idpatients = ?', [request.params.id], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -86,6 +99,8 @@ app.get('/patients/:id', function(request, response) {
 
 //delete all patients
 app.delete('/patients', function(request, response) {
+    console.log("Send request >>>");
+    deleteCounter ++;
     connection.query('DELETE FROM patients', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -97,6 +112,8 @@ app.delete('/patients', function(request, response) {
 
 //delete all records
 app.delete('/patients/records', function(request, response) {
+    console.log("Send request >>>");
+    deleteCounter ++;
     connection.query('UPDATE patients set recordPatient = null, bloodPreasure = null, respirationRate = null, bloodOxigen = null, heartRate = null', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -108,6 +125,8 @@ app.delete('/patients/records', function(request, response) {
 
 //delete patients by id 
 app.delete('/patients/:id', function(request, response) {
+    console.log("Send request >>>");
+    deleteCounter ++;
     console.log("ACA ENTRO AL DELETE POR ID ", request.params.id);
     connection.query('DELETE FROM patients WHERE idpatients = ?',[request.params.id], function(err, rows, fields) {
         if (err) {
@@ -120,6 +139,8 @@ app.delete('/patients/:id', function(request, response) {
 
 //delete Record by id 
 app.delete('/patients/:id/records', function(request, response) {
+    console.log("Send request >>>");
+    deleteCounter ++;
     console.log("ACA ENTRO AL DELETE POR ID DEL RECORD ", request.params.id);
     connection.query("UPDATE patients set recordPatient = null, bloodPreasure = null, respirationRate = null, bloodOxigen = null, heartRate = null WHERE idpatients ='"+request.params.id+"'", function(err, rows, fields) {
         if (err) {
@@ -132,6 +153,8 @@ app.delete('/patients/:id/records', function(request, response) {
 
 //Insert patients with validations
 app.post('/patients', function(request, response, next) {
+    console.log("Send request >>>");
+    postCounter ++;
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -145,6 +168,8 @@ app.post('/patients', function(request, response, next) {
 
 //Insert record by patient
 app.post('/patients/:id/records', function(request, response) {
+    console.log("Send request >>>");
+    postCounter ++;
     console.log("this is the request to create a record for ID patient", request.body.heartRate);
     var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
     console.log(sql);
@@ -159,6 +184,8 @@ app.post('/patients/:id/records', function(request, response) {
 
 //Update record by ID patient
 app.put('/patients/:id/records', function(request, response) {
+    console.log("Send request >>>");
+    putCounter ++;
     var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -172,6 +199,8 @@ app.put('/patients/:id/records', function(request, response) {
 
 //Update patient
 app.put('/patients/:id', function(request, response) {
+    console.log("Send request >>>");
+    putCounter ++;
     var sql ="UPDATE patients set firstName = '"+request.body.firstName+"', lastName = '"+request.body.lastName+"', phoneNumber = '"+request.body.phoneNumber+"', address = '"+request.body.address+"', dateBirthDay = '"+request.body.dateBirthDay+"', department = '"+request.body.department+"', doctorName = '"+request.body.doctorName+"'  WHERE idpatients = '"+request.params.id+"'";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -186,6 +215,8 @@ app.put('/patients/:id', function(request, response) {
 //Users manage Users 
 //get  user and password 
 app.get('/users/password/:username', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
     connection.query('SELECT username, password FROM users WHERE username = ?', [request.params.username], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
@@ -198,5 +229,34 @@ app.get('/users/password/:username', function(request, response) {
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
+    console.log('FullPatients:');
+    console.log(' /patients');
+    console.log(' /patients/:id');
+    console.log(' /patients/records');
+    console.log(' /patients/:id/records');  
     console.log("Listening on " + port);
+    console.log("METHODS REQUEST; POST:"+postCounter+" PUT: "+putCounter+" DELETE: "+deleteCounter+" GET: "+getCounter); 
 });
+
+function isPatientRequestValid(req) {
+    req.assert("first_name", "Field 'first name' is required!").notEmpty();
+    req.assert("last_name", "Field 'last_name' is required!").notEmpty();
+    req.assert("age", "Field 'age' is required!").notEmpty();
+    req.assert("age", "Field 'age' must be an integer").isInt();
+    req.assert("address", "Field 'address' is required!").notEmpty();
+    req.assert("room_number", "Field 'room_number' is required!").notEmpty();
+    req.assert("emergency_number", "Field 'emergency_number' is required!").notEmpty();
+    req.assert("department", "Field 'department' is required!").notEmpty();
+    req.assert("doctor", "Field 'doctor' is required!").notEmpty();
+
+    return req.validationErrors();
+}
+
+function isRecordsRequestValid(req) {
+    req.assert("date", "Field 'date' is required!").notEmpty();
+    req.assert("nurse_name", "Field 'nurse_name' is required!").notEmpty();
+    req.assert("type", "Field 'type' is required!").notEmpty();
+    req.assert("category", "Field 'category' is required!").notEmpty();
+
+    return req.validationErrors();
+}
