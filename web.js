@@ -155,6 +155,11 @@ app.delete('/patients/:id/records', function(request, response) {
 app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
+    let reqValidErrors = isPatientRequestValid(request);
+    if (reqValidErrors) {
+        response.status(400).send(reqValidErrors);
+        return;
+    }
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -239,24 +244,22 @@ app.listen(port, function() {
 });
 
 function isPatientRequestValid(req) {
-    req.assert("first_name", "Field 'first name' is required!").notEmpty();
-    req.assert("last_name", "Field 'last_name' is required!").notEmpty();
-    req.assert("age", "Field 'age' is required!").notEmpty();
-    req.assert("age", "Field 'age' must be an integer").isInt();
-    req.assert("address", "Field 'address' is required!").notEmpty();
-    req.assert("room_number", "Field 'room_number' is required!").notEmpty();
-    req.assert("emergency_number", "Field 'emergency_number' is required!").notEmpty();
+    req.assert("firstName", "Field 'first name' is required!").notEmpty();
+    req.assert("lastName", "Field 'last_name' is required!").notEmpty();
+    req.assert("phoneNumber", "Field 'phone number' is required!").notEmpty();
+    req.assert("address", "Field 'address' must be an integer").isInt();
+    req.assert("dateBirthDay", "Field 'date of Bithday' is required!").notEmpty();
     req.assert("department", "Field 'department' is required!").notEmpty();
-    req.assert("doctor", "Field 'doctor' is required!").notEmpty();
-
+    req.assert("doctorName", "Field 'doctorname' is required!").notEmpty();
     return req.validationErrors();
 }
 
 function isRecordsRequestValid(req) {
-    req.assert("date", "Field 'date' is required!").notEmpty();
-    req.assert("nurse_name", "Field 'nurse_name' is required!").notEmpty();
-    req.assert("type", "Field 'type' is required!").notEmpty();
-    req.assert("category", "Field 'category' is required!").notEmpty();
+    req.assert("recordPatient", "Field 'record patient title' is required!").notEmpty();
+    req.assert("bloodPreasure", "Field 'blood preasure' is required!").notEmpty();
+    req.assert("respirationRate", "Field 'respiration rate' is required!").notEmpty();
+    req.assert("bloodOxigen", "Field 'blood oxigen' is required!").notEmpty();
+    req.assert("heartRate", "Field 'heart rate' is required!").notEmpty();
 
     return req.validationErrors();
 }
