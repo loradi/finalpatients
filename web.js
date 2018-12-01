@@ -55,7 +55,7 @@ app.get('/patients', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['Patients', rows]);
+        response.send(rows);
     });
 });
 
@@ -68,7 +68,7 @@ app.get('/patients/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['code: {201} Patients', rows]);
+        response.send(rows);
     });
 });
 
@@ -81,7 +81,7 @@ app.get('/patients/:id/records', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['code: {201} Patients', rows]);
+        response.send(rows);
     });
 });
 //get  patients by ID 
@@ -222,7 +222,7 @@ app.get('/users/password/:username', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['code: {201} users', rows]);
+        response.send(rows);
     });
 });
 
