@@ -183,6 +183,18 @@ app.put('/patients/:id', function(request, response) {
     });
 });
 
+//Users manage Users 
+//get  user and password 
+app.get('/users/password/:id', function(request, response) {
+    connection.query('SELECT username, password FROM users WHERE idusers = ?', [request.params.id], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['code: {201} users', rows]);
+    });
+});
+
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
