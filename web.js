@@ -155,11 +155,6 @@ app.delete('/patients/:id/records', function(request, response) {
 app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
-    var reqValidErrors = isPatientRequestValid(request);
-    if (reqValidErrors) {
-        response.status(400).send(reqValidErrors);
-        return;
-    }
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
