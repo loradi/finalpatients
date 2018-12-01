@@ -185,8 +185,8 @@ app.put('/patients/:id', function(request, response) {
 
 //Users manage Users 
 //get  user and password 
-app.get('/users/password/:id', function(request, response) {
-    connection.query('SELECT username, password FROM users WHERE idusers = ?', [request.params.id], function(err, rows, fields) {
+app.get('/users/password/:username', function(request, response) {
+    connection.query('SELECT username, password FROM users WHERE username = ?', [request.params.username], function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
