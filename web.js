@@ -93,7 +93,7 @@ app.get('/patients/:id', function(request, response) {
             console.log('error: ', err);
             throw err;
         }
-        response.send(['code: {201} Patients', rows]);
+        response.send(rows);
     });
 });
 
