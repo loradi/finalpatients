@@ -243,7 +243,7 @@ app.get('/users/:username', function(request, response) {
 app.post('/users', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
-    var sql ="INSERT INTO users (idusers, profile, username, password, fullname, gender, contactnumber) VALUES('','"+request.body.profile+"','"+request.body.username+"',"+request.body.password+",'"+request.body.fullname+"','"+request.body.gender+"','"+request.body.contactnumber+")";
+    var sql ="INSERT INTO users (idusers, profile, username, password, fullname, gender, contactnumber) VALUES('','"+request.body.profile+"','"+request.body.username+"',"+request.body.password+",'"+request.body.fullname+"','"+request.body.gender+"','"+request.body.contactnumber+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
         if (err) {
