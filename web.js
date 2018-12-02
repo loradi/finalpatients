@@ -227,7 +227,7 @@ app.get('/users/password/:username', function(request, response) {
 });
 
 //get  full user  
-app.get('/users/password/users/:username', function(request, response) {
+app.get('/users/:username', function(request, response) {
     console.log("Send request >>>");
     getCounter ++;
     connection.query('SELECT * FROM users WHERE username = ?', [request.params.username], function(err, rows, fields) {
@@ -236,6 +236,21 @@ app.get('/users/password/users/:username', function(request, response) {
             throw err;
         }
         response.send(rows);
+    });
+});
+
+//Insert users with validations
+app.post('/users', function(request, response, next) {
+    console.log("Send request >>>");
+    postCounter ++;
+    var sql ="INSERT INTO users (idusers, profile, username, password, fullname, gender, contactnumber) VALUES('','"+request.body.profile+"','"+request.body.username+"',"+request.body.password+",'"+request.body.fullname+"','"+request.body.gender+"','"+request.body.contactnumber+")";
+    console.log(sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log('error code: {404} ', err);
+            throw err;
+        }
+        response.send('code: {201} description: {The patient was created sucessfully}');
     });
 });
 
