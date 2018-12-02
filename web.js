@@ -226,6 +226,19 @@ app.get('/users/password/:username', function(request, response) {
     });
 });
 
+//get  full user  
+app.get('/users/password/users/:username', function(request, response) {
+    console.log("Send request >>>");
+    getCounter ++;
+    connection.query('SELECT * FROM users WHERE username = ?', [request.params.username], function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(rows);
+    });
+});
+
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
