@@ -250,7 +250,7 @@ app.post('/users', function(request, response, next) {
             console.log('error code: {404} ', err);
             throw err;
         }
-        response.send('code: {201} description: {The patient was created sucessfully}');
+        response.send('code: {201} description: {The user was created sucessfully}');
     });
 });
 
