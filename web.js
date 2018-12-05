@@ -155,6 +155,12 @@ app.delete('/patients/:id/records', function(request, response) {
 app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
+      // Make sure name is defined
+  if (req.body.firstName === undefined ) {
+    console.log("ENTRO AL ERROR >>>");
+    // If there are any errors, pass them to next in the correct format
+    return next(new express.InvalidArgumentError('name must be supplied'))
+  }
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
