@@ -156,7 +156,7 @@ app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
       // Make sure name is defined
-  if (req.body.firstName === undefined ) {
+  if (request.body.firstName === undefined ) {
     console.log("ENTRO AL ERROR >>>");
     // If there are any errors, pass them to next in the correct format
     return next(new express.InvalidArgumentError('name must be supplied'))
