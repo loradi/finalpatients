@@ -159,8 +159,10 @@ app.post('/patients', function(request, response, next) {
   if (request.body.firstName === undefined ) {
     console.log("ENTRO AL ERROR >>>");
     // If there are any errors, pass them to next in the correct format
-    return next(new express.InvalidArgumentError('name must be supplied'))
-  }
+    response.send('code: {192}  description {the name must be supplied}');
+  
+
+  }else{
     var sql ="INSERT INTO patients (idpatients, firstName, lastName, phoneNumber, address, dateBirthDay, department, doctorName) VALUES('','"+request.body.firstName+"','"+request.body.lastName+"',"+request.body.phoneNumber+",'"+request.body.address+"','"+request.body.dateBirthDay+"','"+request.body.department+"','"+request.body.doctorName+"')";
     console.log(sql);
     connection.query(sql, function(err, rows, fields) {
@@ -170,6 +172,7 @@ app.post('/patients', function(request, response, next) {
         }
         response.send(['code: {201} description: {The patient was created sucessfully}']);
     });
+  }
 });
 
 //Insert record by patient
