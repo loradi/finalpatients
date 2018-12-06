@@ -156,8 +156,8 @@ app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
       // Make sure name is defined
-  if (request.body.firstName === undefined ) {
-    console.log("ENTRO AL ERROR >>>");
+  if (request.body.firstName === undefined || request.body.lastName === undefined ) {
+    //console.log("ENTRO AL ERROR >>>");
     // If there are any errors, pass them to next in the correct format
     response.send('code: {192}  description {the name must be supplied}');
   
