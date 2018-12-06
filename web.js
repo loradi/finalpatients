@@ -156,10 +156,10 @@ app.post('/patients', function(request, response, next) {
     console.log("Send request >>>");
     postCounter ++;
       // Make sure name is defined
-  if (request.body.firstName === undefined || request.body.lastName === undefined ) {
+  if (request.body.firstName === undefined || request.body.lastName === undefined || request.body.dateBirthDay === undefined || request.body.address === undefined ||request.body.doctorName === undefined ) {
     //console.log("ENTRO AL ERROR >>>");
     // If there are any errors, pass them to next in the correct format
-    response.send('code: {192}  description {the name must be supplied}');
+    response.send('code: {192}  description {this fields are mandatories firstName, lastName, address, dateBirthDay, doctorName}');
   
 
   }else{
@@ -179,6 +179,13 @@ app.post('/patients', function(request, response, next) {
 app.post('/patients/:id/records', function(request, response) {
     console.log("Send request >>>");
     postCounter ++;
+    if (request.body.bloodPreasure === undefined || request.body.respirationRate === undefined || request.body.bloodOxigen === undefined || request.body.heartRate === undefined ) {
+        //console.log("ENTRO AL ERROR >>>");
+        // If there are any errors, pass them to next in the correct format
+        response.send('code: {192}  description {this fields are mandatories bloodPreasure, respirationRate, bloodOxigen, heartRate}');
+      
+    
+      }else{
     console.log("this is the request to create a record for ID patient", request.body.heartRate);
     var sql ="UPDATE patients set recordPatient = '"+request.body.recordPatient+"', bloodPreasure = '"+request.body.bloodPreasure+"', respirationRate = '"+request.body.respirationRate+"', bloodOxigen = '"+request.body.bloodOxigen+"', heartRate = '"+request.body.heartRate+"' WHERE idpatients = '"+request.params.id+"'";
     console.log(sql);
@@ -189,6 +196,7 @@ app.post('/patients/:id/records', function(request, response) {
         }
         response.send(['code: {201} description: {The record patient was created sucessfully}']);
     });
+    }
 });
 
 //Update record by ID patient
