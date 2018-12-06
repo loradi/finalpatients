@@ -159,7 +159,7 @@ app.post('/patients', function(request, response, next) {
   if (request.body.firstName === undefined || request.body.lastName === undefined || request.body.dateBirthDay === undefined || request.body.address === undefined ||request.body.doctorName === undefined ) {
     //console.log("ENTRO AL ERROR >>>");
     // If there are any errors, pass them to next in the correct format
-    response.send('code: {192}  description {this fields are mandatories firstName, lastName, address, dateBirthDay, doctorName}');
+    response.send('code: {192}  description {ERROR!!! this fields are mandatories firstName, lastName, address, dateBirthDay, doctorName. Please Check your request body}');
   
 
   }else{
@@ -182,7 +182,7 @@ app.post('/patients/:id/records', function(request, response) {
     if (request.body.bloodPreasure === undefined || request.body.respirationRate === undefined || request.body.bloodOxigen === undefined || request.body.heartRate === undefined ) {
         //console.log("ENTRO AL ERROR >>>");
         // If there are any errors, pass them to next in the correct format
-        response.send('code: {192}  description {this fields are mandatories bloodPreasure, respirationRate, bloodOxigen, heartRate}');
+        response.send('code: {192}  description {ERROR!!! this fields are mandatories bloodPreasure, respirationRate, bloodOxigen, heartRate. Please check your request body}');
       
     
       }else{
