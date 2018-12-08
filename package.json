@@ -2,9 +2,8 @@
   "name": "node-example",
   "version": "0.0.1",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "3.1.x",
-    "mysql": ""
+    "express": "3.1.x"
+    , "mysql": ""
   },
   "engines": {
     "node": "0.10.x",
