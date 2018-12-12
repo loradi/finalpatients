@@ -46,7 +46,7 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-//get all patients
+//get all patients test
 app.get('/patients', function(request, response) {
     console.log("Send request >>>");
     getCounter ++;
